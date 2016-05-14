@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-bubflix",
+  "version": "1.0.0",
+  "description": "NodeJS server for the bubflix front-end application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "boot": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Bubbit/nodejs-bubflix.git"
+  },
+  "keywords": [
+    "NodeJS"
+  ],
+  "author": "Bubbit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bubbit/nodejs-bubflix/issues"
+  },
+  "homepage": "https://github.com/Bubbit/nodejs-bubflix#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
