@@ -1,4 +1,6 @@
 var express = require('express');
+var requestify = require('requestify');
+
 var fs = require('fs');
 var app = express();
 
@@ -30,6 +32,14 @@ app.get('/', function (req, res) {
 
 app.get('/imdb', function(req, res) {
   res.json(imdbJson);
+});
+
+app.get('/imdb/search', function(req, res) {
+  requestify.get('http://www.omdbapi.com/?s=' + req.query.s + '&y=&type=movie&r=json')
+  .then(function(response) {
+      // Get the response body (JSON parsed or jQuery object for XMLs)
+      res.json(response.getBody());
+  });
 });
  
 app.listen(4000);
