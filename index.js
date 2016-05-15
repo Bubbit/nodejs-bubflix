@@ -41,5 +41,13 @@ app.get('/imdb/search', function(req, res) {
       res.json(response.getBody());
   });
 });
+
+app.get('/kat/movies', function(req, res) {
+  requestify.get('https://kat.cr/json.php?q=' + req.query.title + '+category:movies')
+  .then(function(response) {
+      // Get the response body (JSON parsed or jQuery object for XMLs)
+      res.json(response.getBody());
+  });
+});
  
 app.listen(4000);
