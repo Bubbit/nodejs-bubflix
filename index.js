@@ -1,5 +1,6 @@
 var express = require('express');
 var uTorrent = require('./uTorrent/utorrent');
+var UTorrent = require('machinepack-utorrent');
 var request = require('request');
 const zlib = require('zlib');
 const querystring = require('querystring');
@@ -13,7 +14,7 @@ var imdbJson = JSON.parse(fs.readFileSync('assets/imdb.json', 'utf8'));
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -29,7 +30,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-var utorrent = new uTorrent('localhost', '43611');
+var utorrent = new uTorrent('localhost', '62348');
 utorrent.setCredentials('admin', 'pancake');
 
 // MOCK FUNCTIONS
@@ -62,6 +63,20 @@ app.get('/imdb/search/series', function(req, res) {
       // Get the response body (JSON parsed or jQuery object for XMLs)
       if(error) {
         console.log('Error on /imdb/search/series/', error);
+        //Return 500
+      } else {
+        res.send(body);
+      }
+  });
+});
+
+app.get('/yts', function(req, res) {
+ console.log("download" + req.query.title.replace('?', ''));
+  request({'uri': `https://yts.ag/api/v2/list_movies.json?query_term=${req.query.title}&sort=seeds&limit=15`}, 
+    function (error, response, body) {
+      // Get the response body (JSON parsed or jQuery object for XMLs)
+      if(error) {
+        console.log('Error on /kat/movies', error);
         //Return 500
       } else {
         res.send(body);
@@ -116,10 +131,10 @@ app.get('/torrent/add', function(req, res) {
 });
 
 app.get('/torrent/magnet', function(req, res) {
-  utorrent.call('add-url', {'s': buffer}, function(err, data) {
+  utorrent.call('add-url', {'s': `magnet:?xt=urn:btih:C5D2C46F8F4DB1817A4A74B5235C9AE5A02A8B44&dn=Remco&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce`}, function(err, data) {
         if(err) { console.log('error : '); console.log(err); return; }
 
-        console.log('Successfully added ' + req.query.torrent + 'torrent file !');
+        console.log('Successfully added ' + JSON.stringify(data) + 'torrent file !');
   });
 });
  

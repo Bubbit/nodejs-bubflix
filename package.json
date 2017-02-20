@@ -22,6 +22,7 @@
   "homepage": "https://github.com/Bubbit/nodejs-bubflix#readme",
   "dependencies": {
     "express": "^4.13.4",
+    "machinepack-utorrent": "^0.1.2",
     "requestify": "^0.1.17"
   },
   "devDependencies": {
